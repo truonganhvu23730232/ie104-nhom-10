@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Dashboard
+        QLS
     </x-slot:title>
 
     <div>
@@ -10,7 +10,7 @@
             @auth
                 <div class="d-flex justify-content-center align-items-center gap-2">
                     <span>{{ ucfirst(Auth::user()->name) }}</span>
-                
+
                     <form action="{{ route('qltv.auth.signout') }}" method="POST">
                         @csrf
                         <button type="submit"
@@ -51,7 +51,7 @@
                 
                 <div class="col-sm-10">
                     <div class="mt-4">
-                        <h5>Dashboard</h5>
+                        <h5>Quản lý sách</h5>
 
                         <div>
                             content goes here

@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\QltvController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\QlsachController;
+use App\Http\Controllers\QltacGiaController;
+use App\Http\Controllers\QlthuVienController;
 use Illuminate\Support\Facades\Route;
 
 // qltv
@@ -15,11 +18,16 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/qltv/main', [QltvController::class, 'index'])->name('qltv.main');
+    Route::get('/qltv/main', [DashboardController::class, 'index'])->name('qltv.main');
+
+    Route::get('/qltv/quan-ly-tac-gia', [QltacGiaController::class, 'index'])->name('qltv.qltg');
+    Route::get('/qltv/quan-ly-tac-sach', [QlsachController::class, 'index'])->name('qltv.qls');
+    Route::get('/qltv/quan-ly-thu-vien', [QlthuVienController::class, 'index'])->name('qltv.qltvcc');
+
     Route::post('/qltv/auth/sign-out', [AuthController::class, 'adminSignout'])->name('qltv.auth.signout');
 });
 
-// tvcc
+// tv
 Route::get('auth/sign-in', function () {
     return view('auth.signin');
 })->name('auth.signin');

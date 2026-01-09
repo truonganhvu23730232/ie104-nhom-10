@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Dashboard
+        QLTG
     </x-slot:title>
 
     <div>
@@ -51,7 +51,7 @@
                 
                 <div class="col-sm-10">
                     <div class="mt-4">
-                        <h5>Dashboard</h5>
+                        <h5>Quản lý tác giả</h5>
 
                         <div>
                             content goes here
