@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class QlsachController extends Controller
@@ -12,7 +13,9 @@ class QlsachController extends Controller
     public function index()
     {
         //
-        return view('qltv.qlsach.main');
+        $books = Book::latest()->get();
+
+        return view('qltv.qlsach.index', compact('books'));
     }
 
     /**
@@ -21,6 +24,7 @@ class QlsachController extends Controller
     public function create()
     {
         //
+        return view('qltv.qlsach.create');
     }
 
     /**
@@ -29,6 +33,18 @@ class QlsachController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ], [
+            'name.required' => 'Vui lòng nhập tên sách',
+            'name.max' => 'Tên sách không được quá 255 ký tự',
+        ]);
+
+        Book::create([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('qltv.qls');
     }
 
     /**
@@ -42,24 +58,40 @@ class QlsachController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Book $book)
     {
         //
+        return view('qltv.qlsach.edit', compact('book'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Book $book)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ], [
+            'name.required' => 'Vui lòng nhập tên sách',
+            'name.max' => 'Tên sách không được quá 255 ký tự',
+        ]);
+
+        $book->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('qltv.qls');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
         //
+        $book->delete();
+
+        return redirect()->route('qltv.qls');
     }
 }

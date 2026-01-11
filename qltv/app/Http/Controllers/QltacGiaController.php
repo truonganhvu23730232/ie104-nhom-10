@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class QltacGiaController extends Controller
@@ -12,7 +13,9 @@ class QltacGiaController extends Controller
     public function index()
     {
         //
-        return view('qltv.qltacGia.main');
+        $authors = Author::latest()->get();
+
+        return view('qltv.qltacGia.index', compact('authors'));
     }
 
     /**
@@ -21,6 +24,7 @@ class QltacGiaController extends Controller
     public function create()
     {
         //
+        return view('qltv.qltacGia.create');
     }
 
     /**
@@ -29,6 +33,18 @@ class QltacGiaController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ], [
+            'name.required' => 'Vui lòng nhập tên tác giả',
+            'name.max' => 'Tên tác giả không được quá 255 ký tự',
+        ]);
+
+        Author::create([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('qltv.qltg');
     }
 
     /**
@@ -42,24 +58,40 @@ class QltacGiaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Author $author)
     {
         //
+        return view('qltv.qltacGia.edit', compact('author'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Author $author)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ], [
+            'name.required' => 'Vui lòng nhập tên tác giả',
+            'name.max' => 'Tên tác giả không được quá 255 ký tự',
+        ]);
+
+        $author->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('qltv.qltg');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Author $author)
     {
         //
+        $author->delete();
+
+        return redirect()->route('qltv.qltg');
     }
 }

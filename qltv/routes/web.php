@@ -20,8 +20,20 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/qltv/main', [DashboardController::class, 'index'])->name('qltv.main');
 
+    Route::get('/qltv/quan-ly-sach', [QlsachController::class, 'index'])->name('qltv.qls');
+    Route::get('/qltv/quan-ly-sach/create', [QlsachController::class, 'create'])->name('qltv.qls.create');
+    Route::post('/qltv/quan-ly-sach/store', [QlsachController::class, 'store'])->name('qltv.qls.store');
+    Route::get('/qltv/quan-ly-sach/{book}/edit', [QlsachController::class, 'edit'])->name('qltv.qls.edit');
+    Route::put('/qltv/quan-ly-sach/{book}', [QlsachController::class, 'update'])->name('qltv.qls.update');
+    Route::delete('/qltv/quan-ly-sach/{book}', [QlsachController::class, 'destroy'])->name('qltv.qls.destroy');
+
     Route::get('/qltv/quan-ly-tac-gia', [QltacGiaController::class, 'index'])->name('qltv.qltg');
-    Route::get('/qltv/quan-ly-tac-sach', [QlsachController::class, 'index'])->name('qltv.qls');
+    Route::get('/qltv/quan-ly-tac-gia/create', [QltacGiaController::class, 'create'])->name('qltv.qltg.create');
+    Route::post('/qltv/quan-ly-tac-gia/store', [QltacGiaController::class, 'store'])->name('qltv.qltg.store');
+    Route::get('/qltv/quan-ly-tac-gia/{author}/edit', [QltacGiaController::class, 'edit'])->name('qltv.qltg.edit');
+    Route::put('/qltv/quan-ly-tac-gia/{author}', [QltacGiaController::class, 'update'])->name('qltv.qltg.update');
+    Route::delete('/qltv/quan-ly-tac-gia/{author}', [QltacGiaController::class, 'destroy'])->name('qltv.qltg.destroy');
+
     Route::get('/qltv/quan-ly-thu-vien', [QlthuVienController::class, 'index'])->name('qltv.qltvcc');
 
     Route::post('/qltv/auth/sign-out', [AuthController::class, 'adminSignout'])->name('qltv.auth.signout');
